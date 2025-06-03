@@ -18,10 +18,74 @@
             font-family: 'Poppins', sans-serif;
         }
 
+        /* Fix map container responsive issues */
         #map {
-            height: 100%;
-            width: 100%;
-            border-radius: 12px;
+            height: 100% !important;
+            width: 100% !important;
+            min-height: 400px;
+            position: relative !important;
+            z-index: 1 !important;
+        }
+
+        /* Ensure map container has proper dimensions on mobile */
+        @media (max-width: 768px) {
+            #map {
+                height: calc(100vh - 200px) !important;
+                /* Account for bottom panel */
+                min-height: 300px !important;
+            }
+
+            /* Fix map parent container */
+            .flex-grow {
+                height: calc(100vh - 120px) !important;
+            }
+
+            /* Ensure map doesn't get hidden by bottom panel */
+            .flex-grow .h-full {
+                padding-bottom: 120px;
+                /* Height of collapsed bottom panel */
+            }
+
+            header .flex {
+                flex-wrap: wrap !important;
+            }
+
+            /* Mode buttons container */
+            .flex.justify-center.items-center.space-x-4 {
+                order: 3;
+                width: 100%;
+                margin-top: 10px;
+                justify-content: center !important;
+            }
+
+            /* Mode buttons styling */
+            #userModeBtn,
+            #staffModeBtn {
+                min-height: 44px !important;
+                /* Minimum touch target size */
+                min-width: 44px !important;
+                padding: 8px 16px !important;
+                font-size: 14px !important;
+                touch-action: manipulation !important;
+                -webkit-tap-highlight-color: transparent !important;
+            }
+
+            /* Ensure buttons are above other elements */
+            header {
+                z-index: 1001 !important;
+                position: relative !important;
+            }
+        }
+
+        /* Force map tiles to load properly */
+        .leaflet-container {
+            height: 100% !important;
+            width: 100% !important;
+        }
+
+        /* Fix any overflow issues */
+        .leaflet-control-container {
+            z-index: 1000 !important;
         }
 
         .custom-popup .leaflet-popup-content-wrapper {
