@@ -119,8 +119,9 @@
         </header>
 
         <!-- Login Modal -->
-        <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 z-[9999] hidden flex justify-center items-center">
-    <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
+        <div id="loginModal"
+            class="fixed inset-0 bg-black bg-opacity-50 z-[9999] hidden flex justify-center items-center">
+            <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold text-gray-800">Login</h2>
                     <button id="closeLoginModal" class="text-gray-500 hover:text-gray-700">
@@ -157,7 +158,8 @@
         </div>
 
         <!-- Register Modal -->
-        <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-50 z-[9999] hidden flex justify-center items-center">
+        <div id="registerModal"
+            class="fixed inset-0 bg-black bg-opacity-50 z-[9999] hidden flex justify-center items-center">
             <div class="bg-white rounded-xl p-6 w-full max-w-md mx-4">
                 <div class="flex justify-between items-center mb-4">
                     <h2 class="text-xl font-bold text-gray-800">Register</h2>
@@ -220,9 +222,9 @@
         </div>
 
         <!-- Main Content -->
-        <div class="flex-grow flex flex-col md:flex-row">
-            <!-- Sidebar -->
-            <div id="sidebar" class="w-full md:w-96 bg-white shadow-md p-4 overflow-y-auto">
+        <div class="flex-grow flex flex-col md:flex-row relative">
+            <!-- Desktop Sidebar (Hidden on mobile) -->
+            <div id="sidebar" class="hidden md:block w-96 bg-white shadow-md p-4 overflow-y-auto">
                 <!-- User Mode Content -->
                 <div id="userModeContent" class="space-y-4">
                     <div class="bg-emerald-50 rounded-lg p-4">
@@ -349,6 +351,7 @@
                             <!-- Action buttons will be populated here based on request status -->
                         </div>
                     </div>
+
                     <!-- Rewards Tab Content (Hidden by default) -->
                     <div id="rewardsTab" class="tab-content hidden">
                         <h2 class="text-xl font-bold text-gray-800 mb-4">Program Rewards</h2>
@@ -449,8 +452,274 @@
                 </div>
             </div>
 
+            <!-- Mobile Bottom Panel (Hidden on desktop) -->
+            <div id="bottomPanel"
+                class="md:hidden fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl z-[100] transition-transform duration-300 ease-out transform translate-y-[calc(100%-120px)]">
+                <!-- Panel Handle -->
+                <div class="w-full flex justify-center pt-3 pb-2">
+                    <div id="panelHandle"
+                        class="w-16 h-1.5 bg-gray-300 rounded-full cursor-pointer hover:bg-gray-400 transition-colors">
+                    </div>
+                </div>
+
+                <!-- Panel Header -->
+                <div class="px-5 pb-3 border-b border-gray-100">
+                    <div class="flex items-center justify-between">
+                        <h3 class="font-semibold text-gray-800 text-lg">GreenKu Panel</h3>
+                        <button id="panelCollapseBtn"
+                            class="p-2 text-gray-500 hover:text-gray-700 hover:bg-gray-100 rounded-full transition-colors">
+                            <svg xmlns="http://www.w3.org/2000/svg"
+                                class="h-5 w-5 transform transition-transform duration-200" fill="none"
+                                viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Panel Content -->
+                <div id="panelContent" class="overflow-y-auto max-h-[calc(100vh-200px)] px-5 py-4">
+                    <!-- User Mode Content for Mobile -->
+                    <div id="userModeContentMobile" class="space-y-4">
+                        <div class="bg-emerald-50 rounded-lg p-4">
+                            <h2 class="font-semibold text-emerald-800 mb-2">Laporkan Sampah</h2>
+                            <p class="text-sm text-gray-600 mb-3">Klik pada peta untuk menandai lokasi sampah atau
+                                gunakan
+                                tombol di bawah untuk menggunakan lokasi Anda saat ini.</p>
+                            <button id="useCurrentLocationBtnMobile"
+                                class="w-full bg-emerald-600 text-white py-2 rounded-lg font-medium hover:bg-emerald-700 transition flex items-center justify-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                Gunakan Lokasi Saat Ini
+                            </button>
+                        </div>
+
+                        <div id="requestFormMobile"
+                            class="hidden bg-white border border-gray-200 rounded-lg p-4 space-y-3">
+                            <h3 class="font-semibold text-gray-800">Detail Permintaan</h3>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Jenis Sampah</label>
+                                <select id="wasteTypeMobile"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                    <option value="organik">Organik</option>
+                                    <option value="anorganik">Anorganik</option>
+                                    <option value="b3">B3 (Berbahaya)</option>
+                                    <option value="elektronik">Elektronik</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Perkiraan Volume</label>
+                                <select id="wasteVolumeMobile"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500">
+                                    <option value="kecil">Kecil (< 5kg)</option>
+                                    <option value="sedang">Sedang (5-20kg)</option>
+                                    <option value="besar">Besar (> 20kg)</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
+                                <textarea id="descriptionMobile" rows="3"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                    placeholder="Berikan detail tambahan..."></textarea>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Kontak</label>
+                                <input type="text" id="contactMobile"
+                                    class="w-full border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                                    placeholder="Nomor telepon">
+                            </div>
+                            <div class="flex space-x-2 pt-2">
+                                <button id="cancelRequestBtnMobile"
+                                    class="flex-1 bg-gray-100 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-200 transition">Batal</button>
+                                <button id="submitRequestBtnMobile"
+                                    class="flex-1 bg-emerald-600 text-white py-2 rounded-lg font-medium hover:bg-emerald-700 transition">Kirim</button>
+                            </div>
+                        </div>
+
+                        <div id="userRequestsListMobile" class="space-y-3">
+                            <h3 class="font-semibold text-gray-800">Permintaan Saya</h3>
+                            <div class="border border-gray-200 rounded-lg overflow-hidden">
+                                <!-- User requests will be populated here -->
+                            </div>
+                        </div>
+
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h3 class="font-semibold text-blue-800 mb-2">Bank Sampah Terdekat</h3>
+                            <div id="nearbyRecyclingCentersMobile" class="space-y-2">
+                                <!-- Recycling centers will be populated here -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Staff Mode Content for Mobile -->
+                    <div id="staffModeContentMobile" class="hidden space-y-4">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h2 class="font-semibold text-blue-800 mb-2">Panel Petugas</h2>
+                            <p class="text-sm text-gray-600">Selamat datang, Petugas. Berikut adalah daftar permintaan
+                                yang
+                                perlu ditindaklanjuti.</p>
+                        </div>
+
+                        <div class="grid grid-cols-2 gap-2 mb-3">
+                            <button
+                                class="request-filter-btn-mobile bg-emerald-600 text-white py-2 rounded-lg font-medium text-sm"
+                                data-filter="all">Semua</button>
+                            <button
+                                class="request-filter-btn-mobile bg-gray-200 text-gray-700 py-2 rounded-lg font-medium text-sm"
+                                data-filter="waiting">Menunggu</button>
+                            <button
+                                class="request-filter-btn-mobile bg-gray-200 text-gray-700 py-2 rounded-lg font-medium text-sm"
+                                data-filter="processing">Diproses</button>
+                            <button
+                                class="request-filter-btn-mobile bg-gray-200 text-gray-700 py-2 rounded-lg font-medium text-sm"
+                                data-filter="rewards">
+                                <div class="flex items-center justify-center space-x-1">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                    </svg>
+                                    <span>Rewards</span>
+                                </div>
+                            </button>
+                        </div>
+
+                        <div id="staffRequestsListMobile" class="space-y-3">
+                            <!-- Staff requests will be populated here -->
+                        </div>
+
+                        <div id="requestDetailMobile" class="hidden border border-gray-200 rounded-lg p-4 space-y-3">
+                            <div class="flex justify-between items-center">
+                                <h3 class="font-semibold text-gray-800">Detail Permintaan</h3>
+                                <button id="closeDetailBtnMobile" class="text-gray-500 hover:text-gray-700">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20"
+                                        fill="currentColor">
+                                        <path fill-rule="evenodd"
+                                            d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
+                                            clip-rule="evenodd" />
+                                    </svg>
+                                </button>
+                            </div>
+                            <div id="requestDetailContentMobile">
+                                <!-- Request details will be populated here -->
+                            </div>
+                            <div class="flex space-x-2 pt-2" id="requestActionButtonsMobile">
+                                <!-- Action buttons will be populated here based on request status -->
+                            </div>
+                        </div>
+
+                        <!-- Rewards Tab Content for Mobile -->
+                        <div id="rewardsTabMobile" class="tab-content hidden">
+                            <h2 class="text-xl font-bold text-gray-800 mb-4">Program Rewards</h2>
+
+                            <div class="bg-green-50 rounded-xl p-4 mb-4">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h3 class="font-medium text-gray-800">Poin Anda</h3>
+                                        <p class="text-green-600 font-bold text-2xl">325</p>
+                                    </div>
+                                    <button
+                                        class="bg-green-600 text-white text-sm font-medium px-4 py-2 rounded-lg">Tukar
+                                        Poin</button>
+                                </div>
+                            </div>
+
+                            <h3 class="font-medium text-gray-800 mb-3">Reward Tersedia</h3>
+
+                            <div class="space-y-4">
+                                <div class="bg-white rounded-xl shadow-sm p-4 flex">
+                                    <div class="bg-blue-100 rounded-lg h-16 w-16 flex items-center justify-center mr-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-blue-600"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <h4 class="font-medium text-gray-800">Voucher Belanja</h4>
+                                            <span
+                                                class="bg-blue-100 text-blue-600 text-xs font-medium px-2.5 py-0.5 rounded-full">200
+                                                poin</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mb-2">Diskon Rp25.000 di Supermarket Lokal</p>
+                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                            <div class="bg-blue-600 h-1.5 rounded-full" style="width: 75%"></div>
+                                        </div>
+                                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                            <span>Tersisa 15 voucher</span>
+                                            <span>Berakhir dalam 5 hari</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-xl shadow-sm p-4 flex">
+                                    <div
+                                        class="bg-purple-100 rounded-lg h-16 w-16 flex items-center justify-center mr-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-purple-600"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <h4 class="font-medium text-gray-800">Token Listrik</h4>
+                                            <span
+                                                class="bg-purple-100 text-purple-600 text-xs font-medium px-2.5 py-0.5 rounded-full">350
+                                                poin</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mb-2">Token PLN senilai Rp50.000</p>
+                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                            <div class="bg-purple-600 h-1.5 rounded-full" style="width: 40%"></div>
+                                        </div>
+                                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                            <span>Tersisa 8 voucher</span>
+                                            <span>Berakhir dalam 12 hari</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="bg-white rounded-xl shadow-sm p-4 flex">
+                                    <div
+                                        class="bg-yellow-100 rounded-lg h-16 w-16 flex items-center justify-center mr-4">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-yellow-600"
+                                            fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                        </svg>
+                                    </div>
+                                    <div class="flex-1">
+                                        <div class="flex justify-between items-start">
+                                            <h4 class="font-medium text-gray-800">Cashback e-Wallet</h4>
+                                            <span
+                                                class="bg-yellow-100 text-yellow-600 text-xs font-medium px-2.5 py-0.5 rounded-full">500
+                                                poin</span>
+                                        </div>
+                                        <p class="text-sm text-gray-600 mb-2">Rp75.000 ke e-Wallet pilihan</p>
+                                        <div class="w-full bg-gray-200 rounded-full h-1.5">
+                                            <div class="bg-yellow-600 h-1.5 rounded-full" style="width: 60%"></div>
+                                        </div>
+                                        <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                            <span>Tersisa 5 voucher</span>
+                                            <span>Berakhir dalam 7 hari</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Map Container -->
-            <div class="flex-grow p-4">
+            <div class="flex-grow p-4 md:p-4">
                 <div class="h-full relative rounded-lg overflow-hidden shadow-md">
                     <div id="map"></div>
                     <div class="absolute bottom-4 right-4 z-[1000] flex flex-col space-y-2">
@@ -483,6 +752,143 @@
                 </div>
             </div>
         </div>
+
+        <script>
+            // Bottom Panel Drag Functionality (Mobile Only)
+            document.addEventListener('DOMContentLoaded', function () {
+                const bottomPanel = document.getElementById('bottomPanel');
+                const panelHandle = document.getElementById('panelHandle');
+                const panelCollapseBtn = document.getElementById('panelCollapseBtn');
+                const panelContent = document.getElementById('panelContent');
+
+                let isDragging = false;
+                let startY = 0;
+                let startTranslateY = 0;
+                let isExpanded = false;
+
+                // Panel positions
+                const collapsedPosition = 'calc(100% - 120px)'; // Show only header
+                const expandedPosition = '20px'; // Almost full screen
+
+                // Touch/Mouse events for drag functionality
+                function handleStart(e) {
+                    isDragging = true;
+                    startY = e.type === 'touchstart' ? e.touches[0].clientY : e.clientY;
+
+                    // Get current transform value
+                    const transform = getComputedStyle(bottomPanel).transform;
+                    if (transform !== 'none') {
+                        const matrix = new DOMMatrix(transform);
+                        startTranslateY = matrix.m42; // translateY value
+                    } else {
+                        startTranslateY = 0;
+                    }
+
+                    bottomPanel.style.transition = 'none';
+                }
+
+                function handleMove(e) {
+                    if (!isDragging) return;
+
+                    e.preventDefault();
+                    const currentY = e.type === 'touchmove' ? e.touches[0].clientY : e.clientY;
+                    const deltaY = currentY - startY;
+                    const newTranslateY = startTranslateY + deltaY;
+
+                    // Constrain movement
+                    const maxTranslate = window.innerHeight - 120; // Collapsed state
+                    const minTranslate = 20; // Expanded state
+
+                    const constrainedY = Math.max(minTranslate, Math.min(maxTranslate, newTranslateY));
+                    bottomPanel.style.transform = `translateY(${constrainedY}px)`;
+                }
+
+                function handleEnd(e) {
+                    if (!isDragging) return;
+                    isDragging = false;
+
+                    bottomPanel.style.transition = 'transform 0.3s ease-out';
+
+                    // Determine final position based on drag distance and velocity
+                    const currentY = e.type === 'touchend' ? e.changedTouches[0].clientY : e.clientY;
+                    const deltaY = currentY - startY;
+                    const threshold = window.innerHeight * 0.3; // 30% of screen height
+
+                    if (deltaY > threshold || (deltaY > 50 && !isExpanded)) {
+                        // Collapse panel
+                        collapsePanel();
+                    } else if (deltaY < -threshold || (deltaY < -50 && isExpanded)) {
+                        // Expand panel
+                        expandPanel();
+                    } else {
+                        // Return to previous state
+                        if (isExpanded) {
+                            expandPanel();
+                        } else {
+                            collapsePanel();
+                        }
+                    }
+                }
+
+                function expandPanel() {
+                    isExpanded = true;
+                    bottomPanel.style.transform = `translateY(${expandedPosition})`;
+                    panelCollapseBtn.querySelector('svg').style.transform = 'rotate(180deg)';
+                    panelContent.style.maxHeight = `calc(100vh - 200px)`;
+                }
+
+                function collapsePanel() {
+                    isExpanded = false;
+                    bottomPanel.style.transform = `translateY(${collapsedPosition})`;
+                    panelCollapseBtn.querySelector('svg').style.transform = 'rotate(0deg)';
+                    panelContent.style.maxHeight = '0px';
+                }
+
+                // Handle tap/click events
+                panelHandle.addEventListener('click', function () {
+                    if (isExpanded) {
+                        collapsePanel();
+                    } else {
+                        expandPanel();
+                    }
+                });
+
+                panelCollapseBtn.addEventListener('click', function () {
+                    if (isExpanded) {
+                        collapsePanel();
+                    } else {
+                        expandPanel();
+                    }
+                });
+
+                // Touch events
+                panelHandle.addEventListener('touchstart', handleStart, { passive: false });
+                document.addEventListener('touchmove', handleMove, { passive: false });
+                document.addEventListener('touchend', handleEnd);
+
+                // Mouse events (for testing on desktop)
+                panelHandle.addEventListener('mousedown', handleStart);
+                document.addEventListener('mousemove', handleMove);
+                document.addEventListener('mouseup', handleEnd);
+
+                // Prevent text selection during drag
+                panelHandle.addEventListener('selectstart', function (e) {
+                    e.preventDefault();
+                });
+
+                // Handle screen orientation change
+                window.addEventListener('orientationchange', function () {
+                    setTimeout(() => {
+                        if (isExpanded) {
+                            expandPanel();
+                        } else {
+                            collapsePanel();
+                        }
+                    }, 100);
+                });
+            });
+        </script>
+
     </div>
 
     <!-- Notification Toast -->
@@ -1347,214 +1753,214 @@
         }
 
         document.addEventListener('DOMContentLoaded', function () {
-    
-    // ========== INITIALIZE MAP DAN UI ==========
-    initMap();
-    updateUserRequestsList();
-    updateRecyclingCentersList();
 
-    // ========== FILTER BUTTONS DAN REWARDS TAB ==========
-    const filterButtons = document.querySelectorAll('.request-filter-btn');
-    const rewardsTab = document.getElementById('rewardsTab');
+            // ========== INITIALIZE MAP DAN UI ==========
+            initMap();
+            updateUserRequestsList();
+            updateRecyclingCentersList();
 
-    filterButtons.forEach(button => {
-        button.addEventListener('click', function () {
-            // Reset semua button ke style default
-            filterButtons.forEach(btn => {
-                btn.classList.remove('bg-emerald-600', 'text-white');
-                btn.classList.add('bg-gray-200', 'text-gray-700');
+            // ========== FILTER BUTTONS DAN REWARDS TAB ==========
+            const filterButtons = document.querySelectorAll('.request-filter-btn');
+            const rewardsTab = document.getElementById('rewardsTab');
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Reset semua button ke style default
+                    filterButtons.forEach(btn => {
+                        btn.classList.remove('bg-emerald-600', 'text-white');
+                        btn.classList.add('bg-gray-200', 'text-gray-700');
+                    });
+
+                    // Set button yang diklik ke style active
+                    this.classList.remove('bg-gray-200', 'text-gray-700');
+                    this.classList.add('bg-emerald-600', 'text-white');
+
+                    // Toggle rewards tab visibility
+                    const filter = this.getAttribute('data-filter');
+                    if (filter === 'rewards') {
+                        if (rewardsTab) rewardsTab.classList.remove('hidden');
+                    } else {
+                        if (rewardsTab) rewardsTab.classList.add('hidden');
+                        // Update staff request list berdasarkan filter
+                        updateStaffRequestsList(filter);
+                    }
+                });
             });
 
-            // Set button yang diklik ke style active
-            this.classList.remove('bg-gray-200', 'text-gray-700');
-            this.classList.add('bg-emerald-600', 'text-white');
+            // ========== LOGIN DAN REGISTER MODAL ==========
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            const loginModal = document.getElementById('loginModal');
+            const registerModal = document.getElementById('registerModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const closeRegisterModal = document.getElementById('closeRegisterModal');
 
-            // Toggle rewards tab visibility
-            const filter = this.getAttribute('data-filter');
-            if (filter === 'rewards') {
-                if (rewardsTab) rewardsTab.classList.remove('hidden');
-            } else {
-                if (rewardsTab) rewardsTab.classList.add('hidden');
-                // Update staff request list berdasarkan filter
-                updateStaffRequestsList(filter);
+            // Show Login Modal
+            if (loginBtn && loginModal) {
+                loginBtn.addEventListener('click', function () {
+                    loginModal.classList.remove('hidden');
+                });
             }
-        });
-    });
 
-    // ========== LOGIN DAN REGISTER MODAL ==========
-    const loginBtn = document.getElementById('loginBtn');
-    const registerBtn = document.getElementById('registerBtn');
-    const loginModal = document.getElementById('loginModal');
-    const registerModal = document.getElementById('registerModal');
-    const closeLoginModal = document.getElementById('closeLoginModal');
-    const closeRegisterModal = document.getElementById('closeRegisterModal');
-
-    // Show Login Modal
-    if (loginBtn && loginModal) {
-        loginBtn.addEventListener('click', function () {
-            loginModal.classList.remove('hidden');
-        });
-    }
-
-    // Show Register Modal
-    if (registerBtn && registerModal) {
-        registerBtn.addEventListener('click', function () {
-            registerModal.classList.remove('hidden');
-        });
-    }
-
-    // Close Login Modal
-    if (closeLoginModal && loginModal) {
-        closeLoginModal.addEventListener('click', function () {
-            loginModal.classList.add('hidden');
-        });
-    }
-
-    // Close Register Modal
-    if (closeRegisterModal && registerModal) {
-        closeRegisterModal.addEventListener('click', function () {
-            registerModal.classList.add('hidden');
-        });
-    }
-
-    // Close modal when clicking outside
-    if (loginModal) {
-        loginModal.addEventListener('click', function (e) {
-            if (e.target === loginModal) {
-                loginModal.classList.add('hidden');
+            // Show Register Modal
+            if (registerBtn && registerModal) {
+                registerBtn.addEventListener('click', function () {
+                    registerModal.classList.remove('hidden');
+                });
             }
-        });
-    }
 
-    if (registerModal) {
-        registerModal.addEventListener('click', function (e) {
-            if (e.target === registerModal) {
-                registerModal.classList.add('hidden');
+            // Close Login Modal
+            if (closeLoginModal && loginModal) {
+                closeLoginModal.addEventListener('click', function () {
+                    loginModal.classList.add('hidden');
+                });
             }
-        });
-    }
 
-    // Handle form submissions
-    const loginForm = document.getElementById('loginForm');
-    const registerForm = document.getElementById('registerForm');
-
-    if (loginForm) {
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            alert('Login form submitted!');
-            if (loginModal) loginModal.classList.add('hidden');
-        });
-    }
-
-    if (registerForm) {
-        registerForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-            alert('Register form submitted!');
-            if (registerModal) registerModal.classList.add('hidden');
-        });
-    }
-
-    // ========== MODE SWITCHING ==========
-    const userModeBtn = document.getElementById('userModeBtn');
-    const staffModeBtn = document.getElementById('staffModeBtn');
-    const userModeContent = document.getElementById('userModeContent');
-    const staffModeContent = document.getElementById('staffModeContent');
-
-    if (userModeBtn) {
-        userModeBtn.addEventListener('click', function () {
-            currentMode = 'user';
-            userModeBtn.classList.remove('bg-emerald-700', 'text-white');
-            userModeBtn.classList.add('bg-white', 'text-emerald-600');
-            if (staffModeBtn) {
-                staffModeBtn.classList.remove('bg-white', 'text-emerald-600');
-                staffModeBtn.classList.add('bg-emerald-700', 'text-white');
+            // Close Register Modal
+            if (closeRegisterModal && registerModal) {
+                closeRegisterModal.addEventListener('click', function () {
+                    registerModal.classList.add('hidden');
+                });
             }
-            if (userModeContent) userModeContent.classList.remove('hidden');
-            if (staffModeContent) staffModeContent.classList.add('hidden');
-        });
-    }
 
-    if (staffModeBtn) {
-        staffModeBtn.addEventListener('click', function () {
-            currentMode = 'staff';
-            staffModeBtn.classList.remove('bg-emerald-700', 'text-white');
-            staffModeBtn.classList.add('bg-white', 'text-emerald-600');
+            // Close modal when clicking outside
+            if (loginModal) {
+                loginModal.addEventListener('click', function (e) {
+                    if (e.target === loginModal) {
+                        loginModal.classList.add('hidden');
+                    }
+                });
+            }
+
+            if (registerModal) {
+                registerModal.addEventListener('click', function (e) {
+                    if (e.target === registerModal) {
+                        registerModal.classList.add('hidden');
+                    }
+                });
+            }
+
+            // Handle form submissions
+            const loginForm = document.getElementById('loginForm');
+            const registerForm = document.getElementById('registerForm');
+
+            if (loginForm) {
+                loginForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    alert('Login form submitted!');
+                    if (loginModal) loginModal.classList.add('hidden');
+                });
+            }
+
+            if (registerForm) {
+                registerForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    alert('Register form submitted!');
+                    if (registerModal) registerModal.classList.add('hidden');
+                });
+            }
+
+            // ========== MODE SWITCHING ==========
+            const userModeBtn = document.getElementById('userModeBtn');
+            const staffModeBtn = document.getElementById('staffModeBtn');
+            const userModeContent = document.getElementById('userModeContent');
+            const staffModeContent = document.getElementById('staffModeContent');
+
             if (userModeBtn) {
-                userModeBtn.classList.remove('bg-white', 'text-emerald-600');
-                userModeBtn.classList.add('bg-emerald-700', 'text-white');
+                userModeBtn.addEventListener('click', function () {
+                    currentMode = 'user';
+                    userModeBtn.classList.remove('bg-emerald-700', 'text-white');
+                    userModeBtn.classList.add('bg-white', 'text-emerald-600');
+                    if (staffModeBtn) {
+                        staffModeBtn.classList.remove('bg-white', 'text-emerald-600');
+                        staffModeBtn.classList.add('bg-emerald-700', 'text-white');
+                    }
+                    if (userModeContent) userModeContent.classList.remove('hidden');
+                    if (staffModeContent) staffModeContent.classList.add('hidden');
+                });
             }
-            if (staffModeContent) staffModeContent.classList.remove('hidden');
-            if (userModeContent) userModeContent.classList.add('hidden');
-            updateStaffRequestsList();
-        });
-    }
 
-    // ========== MAP CONTROLS ==========
-    const useCurrentLocationBtn = document.getElementById('useCurrentLocationBtn');
-    const submitRequestBtn = document.getElementById('submitRequestBtn');
-    const cancelRequestBtn = document.getElementById('cancelRequestBtn');
-    const closeDetailBtn = document.getElementById('closeDetailBtn');
-
-    if (useCurrentLocationBtn) {
-        useCurrentLocationBtn.addEventListener('click', function () {
-            getUserLocation();
-        });
-    }
-
-    if (submitRequestBtn) {
-        submitRequestBtn.addEventListener('click', function () {
-            submitRequest();
-        });
-    }
-
-    if (cancelRequestBtn) {
-        cancelRequestBtn.addEventListener('click', function () {
-            const requestForm = document.getElementById('requestForm');
-            if (requestForm) requestForm.classList.add('hidden');
-            if (tempMarker && map) {
-                map.removeLayer(tempMarker);
-                tempMarker = null;
+            if (staffModeBtn) {
+                staffModeBtn.addEventListener('click', function () {
+                    currentMode = 'staff';
+                    staffModeBtn.classList.remove('bg-emerald-700', 'text-white');
+                    staffModeBtn.classList.add('bg-white', 'text-emerald-600');
+                    if (userModeBtn) {
+                        userModeBtn.classList.remove('bg-white', 'text-emerald-600');
+                        userModeBtn.classList.add('bg-emerald-700', 'text-white');
+                    }
+                    if (staffModeContent) staffModeContent.classList.remove('hidden');
+                    if (userModeContent) userModeContent.classList.add('hidden');
+                    updateStaffRequestsList();
+                });
             }
-        });
-    }
 
-    if (closeDetailBtn) {
-        closeDetailBtn.addEventListener('click', function () {
-            const requestDetail = document.getElementById('requestDetail');
-            if (requestDetail) requestDetail.classList.add('hidden');
-            selectedRequestId = null;
-        });
-    }
+            // ========== MAP CONTROLS ==========
+            const useCurrentLocationBtn = document.getElementById('useCurrentLocationBtn');
+            const submitRequestBtn = document.getElementById('submitRequestBtn');
+            const cancelRequestBtn = document.getElementById('cancelRequestBtn');
+            const closeDetailBtn = document.getElementById('closeDetailBtn');
 
-    // ========== REQUEST FILTER BUTTONS (STAFF MODE) ==========
-    document.querySelectorAll('.request-filter-btn').forEach(button => {
-        button.addEventListener('click', function () {
-            const filter = this.getAttribute('data-filter');
+            if (useCurrentLocationBtn) {
+                useCurrentLocationBtn.addEventListener('click', function () {
+                    getUserLocation();
+                });
+            }
 
-            // Update active button
-            document.querySelectorAll('.request-filter-btn').forEach(btn => {
-                btn.classList.remove('bg-emerald-600', 'text-white');
-                btn.classList.add('bg-gray-200', 'text-gray-700');
+            if (submitRequestBtn) {
+                submitRequestBtn.addEventListener('click', function () {
+                    submitRequest();
+                });
+            }
+
+            if (cancelRequestBtn) {
+                cancelRequestBtn.addEventListener('click', function () {
+                    const requestForm = document.getElementById('requestForm');
+                    if (requestForm) requestForm.classList.add('hidden');
+                    if (tempMarker && map) {
+                        map.removeLayer(tempMarker);
+                        tempMarker = null;
+                    }
+                });
+            }
+
+            if (closeDetailBtn) {
+                closeDetailBtn.addEventListener('click', function () {
+                    const requestDetail = document.getElementById('requestDetail');
+                    if (requestDetail) requestDetail.classList.add('hidden');
+                    selectedRequestId = null;
+                });
+            }
+
+            // ========== REQUEST FILTER BUTTONS (STAFF MODE) ==========
+            document.querySelectorAll('.request-filter-btn').forEach(button => {
+                button.addEventListener('click', function () {
+                    const filter = this.getAttribute('data-filter');
+
+                    // Update active button
+                    document.querySelectorAll('.request-filter-btn').forEach(btn => {
+                        btn.classList.remove('bg-emerald-600', 'text-white');
+                        btn.classList.add('bg-gray-200', 'text-gray-700');
+                    });
+                    this.classList.remove('bg-gray-200', 'text-gray-700');
+                    this.classList.add('bg-emerald-600', 'text-white');
+
+                    // Update list berdasarkan filter (kecuali rewards)
+                    if (filter !== 'rewards') {
+                        updateStaffRequestsList(filter);
+                    }
+                });
             });
-            this.classList.remove('bg-gray-200', 'text-gray-700');
-            this.classList.add('bg-emerald-600', 'text-white');
 
-            // Update list berdasarkan filter (kecuali rewards)
-            if (filter !== 'rewards') {
-                updateStaffRequestsList(filter);
-            }
+            console.log('GreenKu Samarinda: All event listeners initialized successfully!');
         });
-    });
 
-    console.log('GreenKu Samarinda: All event listeners initialized successfully!');
-});
-
-// Make functions available globally
-window.showRequestDetail = showRequestDetail;
-window.showRequestOnMap = showRequestOnMap;
-window.showRecyclingCenterOnMap = showRecyclingCenterOnMap;
-window.processRequest = processRequest;
-window.completeRequest = completeRequest;
+        // Make functions available globally
+        window.showRequestDetail = showRequestDetail;
+        window.showRequestOnMap = showRequestOnMap;
+        window.showRecyclingCenterOnMap = showRecyclingCenterOnMap;
+        window.processRequest = processRequest;
+        window.completeRequest = completeRequest;
 
     </script>
     <script>(function () { function c() { var b = a.contentDocument || a.contentWindow.document; if (b) { var d = b.createElement('script'); d.innerHTML = "window.__CF$cv$params={r:'949e7ae48022fd93',t:'MTc0ODk0NjI1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);"; b.getElementsByTagName('head')[0].appendChild(d) } } if (document.body) { var a = document.createElement('iframe'); a.height = 1; a.width = 1; a.style.position = 'absolute'; a.style.top = 0; a.style.left = 0; a.style.border = 'none'; a.style.visibility = 'hidden'; document.body.appendChild(a); if ('loading' !== document.readyState) c(); else if (window.addEventListener) document.addEventListener('DOMContentLoaded', c); else { var e = document.onreadystatechange || function () { }; document.onreadystatechange = function (b) { e(b); 'loading' !== document.readyState && (document.onreadystatechange = e, c()) } } } })();</script>
